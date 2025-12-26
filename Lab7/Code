@@ -1,0 +1,62 @@
+1. Create Tables
+ 
+-- create database
+create database supplierdb;
+use supplierdb;
+ 
+-- create tables
+create table supplier (
+   sid int primary key,
+   sname varchar(50),
+   address varchar(100)
+);
+ 
+create table part (
+   pid int primary key,
+   pname varchar(50),
+   color varchar(20)
+);
+ 
+create table catalog (
+   sid int,
+   pid int,
+   cost decimal(10,2),
+   primary key (sid, pid),
+   foreign key (sid) references supplier(sid),
+   foreign key (pid) references part(pid)
+);
+ 
+2. Insert Values
+ 
+-- insert data into supplier
+insert into supplier values
+(10001, 'acme widget', 'new york'),
+(10002, 'johns', 'chicago'),
+(10003, 'reliance', 'delhi'),
+(10004, 'metro', 'bangalore');
+-- insert data into part
+insert into part values
+(20001, 'book', 'red'),
+(20002, 'charger', 'blue'),
+(20003, 'mobile', 'red'),
+(20004, 'pen', 'black'),
+(20005, 'pencil', 'red');
+
+ 
+-- insert data into catalog
+insert into catalog values
+(10001, 20001, 50.00),
+(10001, 20002, 80.00),
+(10001, 20003, 70.00),
+(10001, 20004, 30.00),
+(10002, 20001, 60.00),
+(10002, 20003, 90.00),
+(10002, 20005, 40.00),
+(10003, 20003, 75.00),
+(10003, 20002, 85.00),
+(10003, 20004, 45.00),
+(10004, 20001, 65.00),
+(10004, 20003, 95.00);
+insert into catalog values (10001, 20005, 35.00);
+
+ 
