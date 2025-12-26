@@ -1,0 +1,50 @@
+i) Find all customers who have an account at all the branches located in a specific city (Delhi)
+ 
+select bc.customername
+from bankcustomer bc
+where not exists (
+   select b.branchname
+   from branch b
+   where b.branchcity = 'Delhi'
+   and b.branchname not in (
+       select ba.branchname
+       from bankaccount ba
+       join depositer d on ba.accno = d.accno
+       where d.customername = bc.customername
+   )
+);
+ii) Find all customers who have a loan at the bank but do not have an account
+select bc.customername
+from bankcustomer bc
+where bc.customername in (select customername from borrower)
+and bc.customername not in (select customername from depositer);
+ iii) Find all customers who have both an account and a loan at the Bangalore branch
+ 
+select distinct bc.customername
+from bankcustomer bc
+join depositer d on bc.customername = d.customername
+join bankaccount ba on d.accno = ba.accno
+join borrower b on bc.customername = b.customername
+join loan l on b.loan_number = l.loan_number
+where ba.branchname in (select branchname from branch where branchcity='Bangalore')
+ and l.branchname in (select branchname from branch where branchcity='Bangalore');
+iv) Find the names of all branches that have greater assets than all branches located in Bangalore
+ 
+select branchname
+from branch
+where assets > (select max(assets) from branch where branchcity='Bangalore');
+v) Demonstrate how to delete all account tuples at every branch located in a specific city (Bombay)
+ 
+delete ba
+from bankaccount ba
+join branch b on ba.branchname = b.branchname
+where b.branchcity = 'Bombay';
+(vi) Update the Balance of all accounts by 5%
+ 
+update bankaccount
+set balance = balance * 0.05
+where accno > 0;
+select * from bankaccount;
+
+
+ 
