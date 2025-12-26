@@ -1,0 +1,30 @@
+i. Create a database “Student” with the following attributes Rollno, Age, ContactNo, EmailId.  
+ 
+ 
+ 
+ 
+ 
+ii. Insert appropriate values
+ 
+db.student.insertMany ([{ Rollno: 10, Name: "ABC", Age: 20, ContactNo: "9876543210", EmailId: "abc@gmail.com" },{ Rollno: 11, Name: "ABC", Age: 21, ContactNo: "9876543211", EmailId:  "abc11@gmail.com" }, { Rollno: 12, Name: "XYZ", Age: 22, ContactNo: "9876543212", EmailId: "xyz@gmail.com" }])  
+ 
+
+ 
+ 
+ 
+iii. Write query to update Email-Id of a student with rollno 10.
+ 
+db.student.updateOne( { Rollno: 10 }, { $set: { EmailId: "newemail10@gmail.com" } } )  
+ 
+ 
+ 
+iv. Replace the student name from “ABC” to “FEM” of rollno 11.  
+ 
+db.student.updateOne( { Rollno: 11, Name: "ABC" }, { $set: { Name: "FEM" } }  
+ 
+v. Export the created table into local file system  
+  
+vi. Drop the table.  
+ 
+vii. Import a given csv dataset from local file system into mongodb collection.
+ 
