@@ -1,0 +1,17 @@
+i) Display accident date and location
+select accident_date, location from accident;
+ii) Update the damage amount to 25000 for a specific car and report number
+ update participated
+set damage_amount = 25000
+where reg_num = 'ka053408' and report_num = 12;
+select * from participated;
+iii) Add a new accident to the database
+ insert into accident (report_num, accident_date, location)
+values (16, '2025-01-01', 'electronic city');
+iv) Display accident date and location again to verify the new record
+select accident_date, location from accident;
+v) Display driver id who did accident with damage amount greater than or equal to Rs.25000
+select driver_id
+from participated
+where damage_amount >= 25000;
+
