@@ -1,0 +1,44 @@
+use insurance;
+(i) Display entire car relation in ascending order of manufacturing year
+select *
+from car
+order by year asc;
+ii) Number of accidents involving cars of model 'Honda' 
+select count(*) as no_of_accidents
+from participated p
+join car c on p.reg_num = c.reg_num
+where c.model = 'Honda';
+iii) Total number of people who owned cars involved in accidents in 2008
+select count(distinct o.driver_id) as total_people
+from owns o
+join participated p on o.reg_num = p.reg_num
+join accident a on p.report_num = a.report_num
+where year(a.accident_date) = 2008;
+iv) List participated relation in descending order of damage amount
+select *
+from participated
+order by damage_amount desc;
+v) Find average damage amount
+select avg(damage_amount) as average_damage
+from participated;
+ vi) Delete tuples with damage amount below average damage
+set sql_safe_updates = 0;
+delete from participated
+where damage_amount < (
+   select avg(damage_amount)
+   from (select damage_amount from participated) as temp
+);
+select * from participated;
+ vii) List names of drivers whose damage is greater than average damage
+select p.name
+from person p
+join participated pa on p.driver_id = pa.driver_id
+where pa.damage_amount > (
+   select avg(damage_amount)
+   from participated
+);
+viii) Find maximum damage amount
+select max(damage_amount) as maximum_damage
+from participated;
+ 
+ 
