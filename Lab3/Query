@@ -1,0 +1,29 @@
+i) Display branch name and assets in lakhs of rupees
+select branchname, concat(assets/100000,' lakhs') as `assets in lakhs`
+from branch;
+ii) Find customers who have at least two accounts at the same branch
+ select d.customername
+from depositer d
+join bankaccount b on d.accno = b.accno
+where b.branchname = 'SBI_ResidencyRoad'
+group by d.customername
+having count(d.accno) >= 2;
+iii) Create a view which gives each branch the sum of the amount of all the loans at the branch
+create view sum_of_loans as
+select branchname, sum(amount) as total_loan
+from loan
+group by branchname;
+-- to check the view
+select * from sum_of_loans;
+iv) Add 1000 rupees to account balance for customers residing in Bangalore
+ -- display updated balances for customers in Bangalore
+select
+   c.customername,
+   b.accno,
+   b.branchname,
+   concat(b.balance, ' rupees') as updated_balance
+from bankaccount b
+join depositer d on b.accno = d.accno
+join bankcustomer c on d.customername = c.customername
+where c.customercity = 'Bangalore';
+ 
