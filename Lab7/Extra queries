@@ -1,0 +1,78 @@
+(i) Most expensive part and the supplier who supplies it
+select c.sid, c.pid, c.cost
+from catalog c
+where c.cost = (select max(cost) from catalog);
+(ii) Suppliers who do NOT supply any red parts
+select s.sid, s.sname
+from supplier s
+where s.sid not in (
+   select c.sid
+   from catalog c
+   join part p on c.pid = p.pid
+   where p.color = 'red'
+);
+iii) Each supplier and total value of all parts they supply
+select s.sid, s.sname, sum(c.cost) as total_value
+from supplier s
+join catalog c on s.sid = c.sid
+group by s.sid, s.sname;
+iv) Suppliers who supply at least 2 parts cheaper than ₹20
+select c.sid
+from catalog c
+where c.cost < 20
+group by c.sid
+having count(*) >= 2;
+(v) Suppliers who offer the cheapest cost for each part
+select c.sid, c.pid, c.cost
+from catalog c
+where c.cost = (
+   select min(cost)
+   from catalog
+   where pid = c.pid
+);
+(vi) View: suppliers and total number of parts they supply
+create view supplier_parts_count as
+select s.sid, s.sname, count(c.pid) as total_parts
+from supplier s
+left join catalog c on s.sid = c.sid
+group by s.sid, s.sname;
+(vii) View: most expensive supplier for each part
+create view most_expensive_supplier as
+select c.pid, c.sid, c.cost
+from catalog c
+where c.cost = (
+   select max(cost)
+   from catalog
+   where pid = c.pid
+);
+viii) Trigger prevent inserting catalog cost below 1
+delimiter //
+create trigger check_cost_before_insert
+before insert on catalog
+for each row
+begin
+   if new.cost < 1 then
+       signal sqlstate '45000'
+       set message_text = 'cost cannot be less than 1';
+   end if;
+end;
+//
+delimiter ;
+ix) Trigger set default cost if not provided (default = 50)
+delimiter //
+create trigger set_default_cost
+before insert on catalog
+for each row
+begin
+   if new.cost is null then
+       set new.cost = 50;
+   end if;
+end;
+//
+delimiter ;
+
+
+
+
+
+ 
