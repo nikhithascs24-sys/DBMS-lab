@@ -1,0 +1,44 @@
+i. Write NoSQL Queries on “Restaurant” collection.  
+ 
+db.createCollection("restaurants")  
+ 
+
+ 
+ii. Write a MongoDB query to display all the documents in the collection restaurants?  
+ 
+db.restaurants.insertMany([{restaurant_id: 1,name: "Spice Hub",town:
+"Hyderabad",cuisine:  
+"Indian",score: 8},{restaurant_id: 2,name: "Food Palace",town: "Bangalore"cuisine:
+"Chinese",score:  
+12 },{restaurant_id: 3,name: "Tandoori Treats",town: "Delhi",cuisine: "Indian",score: 9 },{restaurant_id: 4,name: "Pizza Corner",town: "Chennai",cuisine: "Italian",score: 15},{ restaurant_id: 5,name: "Urban Bites",town: "Mumbai",cuisine: "Continental",  score: 10}])  
+ 
+ 
+ 
+iii. Write a MongoDB query to arrange the name of the restaurants in descending along with all the columns
+ 
+​. db.restaurants.find().sort({ name: -1 })    
+ 
+ 
+ 
+ 
+iv. Write a MongoDB query to find the restaurant Id, name, town and cuisine for those restaurants which achieved a score which is not more than 10.  
+ 
+db.restaurants.find( { score: { $lte: 10 } }, { restaurant_id: 1, name: 1, town: 1, cuisine: 1, _id: 0 } )  
+ 
+  
+ 
+v. Write a MongoDB query to find the average score for each restaurant.
+ 
+db.restaurants.aggregate([ { $group: { _id: "$restaurant_id", avgScore: { $avg: "$score" }}}])  
+ 
+  
+ 
+ 
+vi. Write a MongoDB query to find the name and address of the restaurants that have a zipcode that starts with '10'.  
+ 
+db.restaurants.find( { "address.zipcode": { $regex: "^10" } }, { name: 1, address: 1, _id: 0
+} )  
+ 
+
+ 
+ 
