@@ -1,0 +1,50 @@
+use employe;
+(i) List the name of the managers with the maximum employees
+select m.ename,count(*)
+from employee e
+join employee m on e.mgrno = m.empno
+group by m.empno, m.ename
+having count(*) = (
+   select max(cnt)
+   from (
+       select count(*) as cnt
+       from employee
+       where mgrno is not null
+       group by mgrno
+   ) t
+);
+(ii) Display those managers name whose salary is more than average salary of his employee
+select distinct *
+from employee m
+where m.empno in (select mgrno from employee)
+and m.sal > (
+   select avg(e.sal)
+   from employee e
+   where e.mgrno = m.empno
+);
+iii) Find the name of the second top level managers of each department
+select distinct e.ename, d.dname
+from employee e
+join dept d on e.deptno = d.deptno
+where e.mgrno in (
+   select empno
+   from employee
+   where mgrno is null
+);
+(iv) Find the employee details who got second maximum incentive in january 2019
+select e.*
+from employee e
+join incentives i on e.empno = i.empno
+where year(i.incentivedate) = 2024
+and i.incentiveamount = (
+   select max(incentiveamount)
+   from incentives
+   where incentiveamount < (
+       select max(incentiveamount) from incentives
+   )
+);
+(v) Display those employees who are working in the same department where his manager is working
+select e.empno, e.ename
+from employee e
+join employee m on e.mgrno = m.empno
+where e.deptno = m.deptno;
