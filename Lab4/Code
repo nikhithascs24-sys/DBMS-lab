@@ -1,0 +1,22 @@
+ 
+1. Create Tables
+ 
+use bank2;
+create table  borrower (
+   customername varchar(20),
+   loan_number int,
+   primary key(customername, loan_number),
+   foreign key (customername) references bankcustomer(customername),
+   foreign key (loan_number) references loan(loan_number)
+);
+ 
+2. Insert Values
+ 
+-- insert sample data into borrower
+insert into borrower values
+('Avinash', 1),
+('Dinesh', 2),
+('Nikil', 4),
+('Ravi', 5),
+('Mohan', 3);
+ 
