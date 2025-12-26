@@ -1,0 +1,80 @@
+1. Create Tables
+create database employe;
+use employe;
+-- create dept table
+create table dept (
+   deptno int primary key,
+   dname varchar(50),
+   dloc varchar(50)
+);
+ 
+-- create employee table
+create table employee (
+   empno int primary key,
+   ename varchar(50),
+   mgrno int,
+   hiredate date,
+   sal decimal(10,2),
+   deptno int,
+   foreign key (deptno) references dept(deptno)
+);
+ 
+-- create project table
+create table project (
+   pno int primary key,
+   ploc varchar(50),
+   pname varchar(50)
+);
+-- create assignedto table
+create table assignedto (
+   empno int,
+   pno int,
+   jobrole varchar(50),
+   primary key (empno, pno),
+   foreign key (empno) references employee(empno),
+   foreign key (pno) references project(pno)
+);
+ 
+-- create incentives table
+create table incentives (
+   empno int,
+   incentivedate date,
+   incentiveamount decimal(10,2),
+   primary key (empno, incentivedate),
+   foreign key (empno) references employee(empno)
+);
+ 
+2. Insert Values
+-- insert values into dept
+insert into dept values
+(10, 'hr', 'bengaluru'),
+(20, 'finance', 'hyderabad'),
+(30, 'it', 'mysuru'),
+(40, 'sales', 'chennai'),
+(50, 'r&d', 'bengaluru'),
+(60, 'admin', 'hyderabad');
+ insert into employee values
+(101, 'asha', null, '2020-02-01', 60000, 10),
+(102, 'rahul', 101, '2021-05-12', 55000, 20),
+(103, 'meena', 101, '2019-03-15', 70000, 30),
+(104, 'kiran', 102, '2022-07-10', 45000, 40),
+(105, 'divya', 103, '2023-01-08', 50000, 50),
+(106, 'ravi', 101, '2023-04-20', 40000, 60);
+ insert into project values
+(201, 'bengaluru', 'payroll system'),
+(202, 'hyderabad', 'bank app'),
+(203, 'mysuru', 'e-commerce'),
+(204, 'chennai', 'sales tracker'),
+(205, 'bengaluru', 'ai research'),
+(206, 'hyderabad', 'admin portal');
+insert into assignedto values
+(101, 201, 'manager'),
+(102, 202, 'analyst'),
+(103, 203, 'developer'),
+(104, 204, 'sales rep'),
+(105, 205, 'engineer'),
+(106, 206, 'coordinator');
+insert into incentives values
+(101, '2024-03-01', 2000),
+(102, '2024-06-01', 3000),
+(103, '2024-07-01', 1500);
