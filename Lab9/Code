@@ -1,0 +1,60 @@
+i. Create a collection by name Customers with the following attributes. Cust_id, Acc_Bal, Acc_Type  
+ 
+ 
+ 
+ 
+ 
+ii. Insert at least 5 values into the table.
+ 
+db.Customers.insertMany([  
+ { Cust_id: 101, Acc_Bal: 1500,  Acc_Type: "Z" },  
+ { Cust_id: 101, Acc_Bal: 1600,  Acc_Type: "A" },  
+ { Cust_id: 102, Acc_Bal: 1700, Acc_Type: "B" },  
+ { Cust_id: 103, Acc_Bal: 1800,  Acc_Type: "C" },  
+ { Cust_id: 103, Acc_Bal: 800,  Acc_Type: "Z" }])  
+ 
+ 
+ 
+ 
+ 
+ 
+iii. Write a query to display those records whose total account balance is greater than 1200 of account type ‘Z’ for each customer_id.  
+ 
+db.Customers.aggregate([  
+ { $match: { Acc_type: "Z" } },  
+ { $group: {   _id: "$Cust_id", TotalBalance: { $sum:
+"$Acc_bal" }}},   { $match: { TotalBalance: { $gt: 1200 } } }])  
+ 
+ 
+ 
+ 
+ 
+iv. Determine Minimum and Maximum account balance for each customer_id.
+ 
+db.Customers.aggregate([{$group: { _id: "$Cust_id", MinBalance: { $min: "$Acc_Bal" },MaxBalance: { $max: "$Acc_Bal" }}}])    
+ 
+
+ 
+ 
+ 
+ 
+ 
+v. Export the created collection into local file system.  
+ 
+  
+ 
+vi. Drop the table.  db.Customers.drop()  
+ 
+ 
+ 
+ 
+vii. Import a given csv dataset from local file system into mongodb collection.  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
