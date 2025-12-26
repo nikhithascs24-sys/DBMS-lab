@@ -1,0 +1,25 @@
+(i) Retrieve employee numbers of employees working on projects in bengaluru, hyderabad, or Mysuru
+select distinct e.empno,p.ploc
+from employee e
+join assignedto a on e.empno = a.empno
+join project p on a.pno = p.pno
+where p.ploc in ('bengaluru', 'hyderabad', 'mysuru');
+(ii) Get employee ids of employees who did not receive incentives
+select e.empno
+from employee e
+where e.empno not in (
+   select empno from incentives
+);
+iii) Employees working on project location same as department location
+select
+e.ename,
+e.empno,
+d.dname,
+a.jobrole,
+d.dloc as dept_location,
+p.ploc as project_location
+from employee e
+join dept d on e.deptno = d.deptno
+join assignedto a on e.empno = a.empno
+join project p on a.pno = p.pno
+where d.dloc = p.ploc;
